@@ -39,9 +39,8 @@ server.get('/api/users/:id', (req, res) => {
 server.post('/api/users', (req, res) => {
     const {name, bio} = req.body;
     if (!name || !bio) {
-        return res
-        .status(400)
-        .json({message:"Name and Bio Please"});
+        return 
+        res.status(400).json({message:"Name and Bio Please"});
     }
     DataB.insert({name, bio})
     .then(newUser => {
