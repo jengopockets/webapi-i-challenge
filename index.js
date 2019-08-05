@@ -52,5 +52,44 @@ server.post('/api/users', (req, res) => {
     });
 });
 
+//Delete
+server.delete('/api/users/:id', (req, res) => {
+    const userId = req.params.id;
+    DataB.remove(userId)
+    .then(user => {
+        if(user) {
+            res.status(200).json({message:"User has been Deleted"});
+        } else {
+            res.status(404).json({message: "user is imaginary"})
+        }
+    })
+    .catch(error => {
+        res.status(500).json({message:"Error"})
+    });
+});
+
+//Update
+server.put('/api/users/:id', (req, res) => {
+    const { id } = req.params;
+    const {name, bio} = req.body;
+    if (!name || !bio) {
+        return res
+        .status(400)
+        .json({message:"Name and Bio Please"});
+    }
+    DataB.update(id,{name, bio})
+    .then(updated => {
+        if(updated) {
+            res.status(200).json(updated);
+        } else {
+            res.status(404).json({message:"user is imaginary"})
+        }
+    })
+    .catch(error => {
+        res.status(500).json({message:"Sorry You Didn't do it right"})
+    });
+});
+
+
 const port = 8000;
 server.listen(port, () => console.log('api running'));
