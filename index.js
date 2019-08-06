@@ -38,10 +38,9 @@ server.get('/api/users/:id', (req, res) => {
 //Post
 server.post('/api/users', (req, res) => {
     const {name, bio} = req.body;
-    if (!name || !bio) {
-        return 
+    if (!name || !bio) { 
         res.status(400).json({message:"Name and Bio Please"});
-    }
+    }else{
     DataB.insert({name, bio})
     .then(newUser => {
         res.status(200).json(newUser);
@@ -49,7 +48,7 @@ server.post('/api/users', (req, res) => {
     .catch(error => {
         res.status(500).json({message:"Sorry You Didn't do it right"})
     });
-});
+}});
 
 //Delete
 server.delete('/api/users/:id', (req, res) => {
@@ -72,10 +71,8 @@ server.put('/api/users/:id', (req, res) => {
     const { id } = req.params;
     const {name, bio} = req.body;
     if (!name || !bio) {
-        return res
-        .status(400)
-        .json({message:"Name and Bio Please"});
-    }
+         res.status(400).json({message:"Name and Bio Please"});
+    }else{
     DataB.update(id,{name, bio})
     .then(updated => {
         if(updated) {
@@ -87,7 +84,7 @@ server.put('/api/users/:id', (req, res) => {
     .catch(error => {
         res.status(500).json({message:"Sorry You Didn't do it right"})
     });
-});
+}});
 
 
 const port = 8000;
